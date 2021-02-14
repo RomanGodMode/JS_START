@@ -1,3 +1,6 @@
+@import "src/client/static/styles/variables";
 .ResultPanel{
-  //background-color: pink;
+  color: white;
+  padding: 20px;
+  background-color: $main-content;
 }

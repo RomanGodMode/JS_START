@@ -1,0 +1,58 @@
+@import '../../../../static/styles/variables';
+
+.LessonCaption {
+  padding: 35px 40px 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  color: #fff;
+
+  .HlebnieKroshki {
+    width: 300px;
+    font-size: inherit;
+
+    span,
+    a {
+      color: white;
+    }
+
+    a:hover {
+      color: $link-highlight;
+    }
+  }
+
+  .Steps {
+    .Step {
+    }
+  }
+}
+
+//TODO: расфигачить вертикально
+@media only screen and (max-width: 1000px) {
+  .LessonCaption {
+    flex-direction: column;
+
+    .Steps{
+      .Step {
+        margin-left: 0;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 700px) {
+  .LessonCaption {
+    .Steps{
+      flex-direction: column;
+      .Step {
+        margin-left: 0;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 512px) {
+  .LessonCaption {
+    padding: 20px;
+  }
+}

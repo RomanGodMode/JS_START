@@ -1,4 +1,31 @@
+@import "src/client/static/styles/variables";
+.CodeEditor{
 
-.igor{
-  //background-color: red;
+  .toolsPanel{
+    background-color: $pale-back;
+    .runButton{
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: $pale-back;
+      outline: none;
+      border: none;
+      border-right: 1px solid rgb(255,255,255,.4);
+      &:hover{
+        cursor: pointer;
+        background-color: $fair-highlight;
+        .arrow{
+          color: white;
+        }
+      }
+      span{
+        color: white;
+      }
+      .arrow{
+        margin-left: 10px;
+        color: $fair-highlight;
+      }
+    }
+  }
 }

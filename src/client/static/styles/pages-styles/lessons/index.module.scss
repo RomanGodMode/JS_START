@@ -1,4 +1,4 @@
-@import './src/client/shared/main.scss';
+@import '../../variables';
 
 .lessons {
   padding: 26px;
@@ -8,10 +8,12 @@
   align-items: center;
   flex-wrap: wrap;
   .lesson{
+    margin: 20px;
     width: 300px;
+    max-width: 100%;
   }
   .lesson+.lesson{
-    margin-left: 20px;
+
   }
   .lessonCardBody {
     padding: 13px;
@@ -60,13 +62,3 @@
   }
 }
 
-//TODO: ПРоверить адаптив с большим кол-вом карточек
-@media only screen and (max-width: 1024px) {
-  .lessons{
-    flex-direction: column;
-    .lesson + .lesson {
-      margin-left: 0;
-      margin-top: 20px;
-    }
-  }
-}

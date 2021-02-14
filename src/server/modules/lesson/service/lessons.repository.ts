@@ -6,7 +6,7 @@ import { CreateLessonDto } from '../dto/CreateLesson.dto'
 
 @Injectable()
 export class LessonsRepository {
-  // Di
+
   constructor(
     @InjectModel(Lesson.name)
     private readonly lessonModel: Model<LessonDocument>

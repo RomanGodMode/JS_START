@@ -1,14 +1,8 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
+import { Stage } from "~shared/types/lesson";
 
 export type LessonDocument = Lesson & Document
-
-export type Stage = {
-  num: number
-  title: string
-  task: string
-  answer: string
-}
 
 @Schema()
 export class Lesson {

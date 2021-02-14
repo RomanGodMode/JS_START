@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './TipsDisplayer.module.scss'
+import styles from './tips-displayer.module.scss'
 import { Tabs } from 'antd'
 import Container from '~client/shared/partials/Container/Container'
 
@@ -9,20 +9,17 @@ type Props = {
 }
 
 const TipsDisplayer: React.FC<Props> = ({ tips }) => {
-  let i = 1
-  const tipsTabs = tips.map(t => (
-    <TabPane tab={i} key={i++}>
-      {t}
+  const tipsTabs = tips.map((t, i) => (
+    <TabPane className={styles.tipBody} tab={i + 1} key={i + 1}>
+      {t + 1}
     </TabPane>
   ))
   return (
-    <Container>
-      <div className={styles.TipsDisplayer}>
-        <Tabs size={'large'} type="line">
-          {tipsTabs}
-        </Tabs>
-      </div>
-    </Container>
+    <div className={styles.TipsDisplayer}>
+      <Tabs size={'large'} type="line">
+        {tipsTabs}
+      </Tabs>
+    </div>
   )
 }
 

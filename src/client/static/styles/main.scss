@@ -1,19 +1,57 @@
-.ant-card-head-title{
-  color: #effdff;
+@import "variables";
+
+.fa-arrow-right{
+  font-size: 1.6em;
+  color: #fff;
+}
+//<antd-steps>
+@media only screen and (max-width: 700px){
+  .ant-steps-item{
+    padding: 0 !important;
+  }
+}
+.ant-steps-item-title{
+  color: white !important;
+}
+.ant-steps-item-finish{
+  .ant-steps-item-icon{
+    background-color: rgb(255,255,255,.1) !important;
+    border: none;
+    span{
+      color: lightgreen !important;
+    }
+  }
+}
+.ant-steps-item-process{
+  .ant-steps-item-icon span{
+    color: white !important;
+  }
+}
+.ant-steps-item-wait{
+  .ant-steps-item-icon span{
+    color: grey !important;
+  }
+}
+//</antd-steps>
+
+.ant-tabs-tab-btn{
+  padding: 20px;
+}
+@media only screen and (max-width: 500px){
+  .ant-tabs-tab-btn{
+    padding: 15px;
+  }
+}
+@media only screen and (max-width: 400px){
+  .ant-tabs-tab-btn{
+    padding: 12px;
+  }
 }
 
-$main-back: #333333;
-$pale-back: #475362;
-$main-content: #375160;
-$fair-highlight: #14bdaa;
 
 .main-content{
   background-color: $main-back;
   min-height: 100vh;
 }
 
-.fa-arrow-right{
-  font-size: 1.6em;
-  color: #fff;
-}
 

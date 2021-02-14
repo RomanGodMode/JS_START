@@ -1,7 +1,9 @@
 .TipsDisplayer{
-  padding: 10px;
-
-  .asfgasdg{
-    border: 1px outset #282a36;//TODO:Для подсказок
+  padding: 0 10px 20px;
+  div{
+    color: white;
+  }
+  .tipBody{
+    min-height: 70px;
   }
 }

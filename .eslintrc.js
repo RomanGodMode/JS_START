@@ -19,6 +19,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'only-warn'],
   rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
     'new-cap': 'off',
     'no-useless-constructor': 'off',
     '@typescript-eslint/no-useless-constructor': ['error'],

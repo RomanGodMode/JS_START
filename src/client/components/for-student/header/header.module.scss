@@ -1,0 +1,20 @@
+@import '../../../static/styles/variables';
+.header{
+  background-color: $main-content;
+  font-size: 18px;
+  .list{
+    height: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    a{
+      padding: 20px;
+      color: white;
+      &:hover{
+        background-color: $fair-highlight;
+      }
+    }
+  }
+}
+

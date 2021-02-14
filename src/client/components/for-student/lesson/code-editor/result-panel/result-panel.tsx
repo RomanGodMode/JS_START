@@ -1,14 +1,13 @@
 import React, { FC } from 'react'
-import styles from './result-panel.module.scss'
+import s from './result-panel.module.scss'
 
 type Props = {
   result: string
 }
 
 const ResultPanel: FC<Props> = ({ result }) => (
-  <div className={styles.ResultPanel}>
-    Результат
-    <div>{result}</div>
+  <div className={s.ResultPanel}>
+    {!!result? result : 'Пока ваш код ничего не выводит'}
   </div>
 )
 
