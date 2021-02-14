@@ -1,0 +1,72 @@
+@import './src/client/shared/main.scss';
+
+.lessons {
+  padding: 26px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  .lesson{
+    width: 300px;
+  }
+  .lesson+.lesson{
+    margin-left: 20px;
+  }
+  .lessonCardBody {
+    padding: 13px;
+    font-size: 17px;
+    background-color: $main-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: $pale-back;
+      transition: 0.3s ease;
+      cursor: pointer;
+      i {
+        color: $fair-highlight;
+        transition: 0.3s ease;
+      }
+    }
+    .text {
+      padding: 10px 20px;
+      color: #fff;
+    }
+
+    .fas {
+      width: 30px;
+      height: 30px;
+      background-color: $fair-highlight;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fas:hover {
+      background-color: #fff;
+      transition: 0.3s ease;
+    }
+
+    .fas:hover {
+      color: $fair-highlight;
+      transition: 0.3s ease;
+    }
+  }
+}
+
+//TODO: ПРоверить адаптив с большим кол-вом карточек
+@media only screen and (max-width: 1024px) {
+  .lessons{
+    flex-direction: column;
+    .lesson + .lesson {
+      margin-left: 0;
+      margin-top: 20px;
+    }
+  }
+}
