@@ -3,7 +3,8 @@
 
   .toolsPanel{
     background-color: $pale-back;
-    .runButton{
+    position: relative;
+    .ezBtn{
       padding: 20px;
       display: flex;
       align-items: center;
@@ -11,7 +12,10 @@
       background-color: $pale-back;
       outline: none;
       border: none;
-      border-right: 1px solid rgb(255,255,255,.4);
+      .arrow{
+        margin-left: 10px;
+        color: $fair-highlight;
+      }
       &:hover{
         cursor: pointer;
         background-color: $fair-highlight;
@@ -22,10 +26,17 @@
       span{
         color: white;
       }
-      .arrow{
-        margin-left: 10px;
-        color: $fair-highlight;
-      }
     }
+
+    .runButton{
+      border-right: 1px solid rgb(255,255,255,.4);
+    }
+    .toNextButton{
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-left: 1px solid rgb(255,255,255,.4);
+    }
+
   }
 }

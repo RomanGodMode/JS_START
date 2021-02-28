@@ -2,5 +2,6 @@
 .ResultPanel{
   color: white;
   padding: 20px;
-  background-color: $main-content;
+  background-color: $pale-back;
+  border-top: 1px solid rgb(255,255,255,.4);
 }

@@ -6,9 +6,9 @@ import 'codemirror/addon/hint/show-hint.css'
 
 import dynamic from 'next/dynamic'
 import { IControlledCodeMirror } from 'react-codemirror2'
+import { useLocalStorage } from "~client/shared/hooks/useLocalStorage";
 
 if (typeof window !== 'undefined') {
-  // import('codemirror/addon/hint/anyword-hint')
   import('codemirror/addon/hint/show-hint')
   import('codemirror/mode/javascript/javascript')
   import('codemirror/addon/hint/javascript-hint')
@@ -25,16 +25,18 @@ type Props = {
   value: string
 }
 
-//TODO: Прокидывать через пропсы тему и размер шрифта
 
 const TextEditor: FC<Props> = ({ onChange, value }) => {
+
+  const [settings, setSettings] = useLocalStorage('settings', { theme: 'material' })
+
   const options = {
     lineWrapping: true,
     lint: true,
-    theme: 'material',
     lineNumbers: true,
     mode: 'javascript',
-    extraKeys: { 'Shift-Space': 'autocomplete' }
+    extraKeys: { 'Shift-Space': 'autocomplete' },
+    ...settings
   }
 
   function handleChange(editor, data, value) {

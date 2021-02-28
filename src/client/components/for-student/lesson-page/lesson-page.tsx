@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux'
-import React, { useEffect, useState } from 'react'
-import { fetchLesson } from '~client/redux/lesson-page/actions'
+import React, { useEffect } from 'react'
 import { useSelector } from '~client/shared/hooks/useAppSelector'
 import { useLocalStorage } from '~client/shared/hooks/useLocalStorage'
 import s from '~client/static/styles/pages-styles/lessons/lesson.module.scss'
@@ -9,21 +8,25 @@ import LessonCaption from '~client/components/for-student/lesson/lesson-caption/
 import Container from '~client/shared/partials/Container/Container'
 import TipsDisplayer from '~client/components/for-student/lesson/tips-displayer/tips-displayer'
 import CodeEditor from '~client/components/for-student/lesson/code-editor/code-editor'
-import { setIsPreviouslyPassed } from '~client/redux/lesson-page/lesson-page-slice'
-import { NextThunkDispatch, wrapper } from '~client/pages/_app'
+import { clearLessonNum, setIsPreviouslyPassed } from '~client/redux/lesson-page/lesson-page-slice'
 
 export const LessonPage = () => {
+  const lesson = useSelector(state => state.lessonPage.lesson)
   const dispatch = useDispatch()
 
-  const lesson = useSelector(state => state.lessonPage.lesson)
+  const [nums, setPassedNumbers] = useLocalStorage('passed-numbers', [])
+  const isPreviouslyPassed = useSelector(state => state.lessonPage.progress.isPreviouslyPassed)
 
-  const [nums] = useLocalStorage('passed-numbers', [])
+  //TODO: Чёртов HYDRATE
+  useEffect(() => {
+    return () => dispatch(clearLessonNum())
+  }, [])
+
   useEffect(() => {
     if (nums.includes(lesson.num)) dispatch(setIsPreviouslyPassed())
   }, [lesson.num])
 
   const isLessonPassedRightNow = useSelector(state => state.lessonPage.progress.isLessonPassedRightNow)
-  const [_, setPassedNumbers] = useLocalStorage('passed-numbers', [])
   useEffect(() => {
     if (isLessonPassedRightNow) setPassedNumbers(nums => [...nums, lesson.num])
   }, [isLessonPassedRightNow])
@@ -42,5 +45,3 @@ export const LessonPage = () => {
     </div>
   )
 }
-
-

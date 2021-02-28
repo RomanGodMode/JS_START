@@ -2,11 +2,11 @@ import axios from 'axios'
 import { Lesson, LessonHead } from '~shared/types/lesson'
 
 const axiosInstance = axios.create({
-  // withCredentials:true,
-  baseURL: 'http://localhost:3000/api',// TODO: Подменять доменное имя для продакшена
+  baseURL: process.env.API_BASE_URL,
   headers: {}
 })
-const lessonAPI = {
+
+export const lessonAPI = {
   async getLessons(): Promise<LessonHead[]> {
     return axiosInstance.get('lessons').then(res => res.data)
   },

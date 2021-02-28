@@ -10,7 +10,7 @@ const Header = () => {
         <div className={s.list}>
           <Link href={'/lessons'}>Уроки</Link>
           <Link href={'/settings'}>Настройки</Link>
-          <Link href={'/login'}>Логин</Link>
+          <Link href={'/login'}>Админу</Link>
         </div>
       </Container>
     </header>
