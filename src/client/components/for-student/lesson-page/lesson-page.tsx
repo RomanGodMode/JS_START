@@ -9,6 +9,7 @@ import Container from '~client/shared/partials/Container/Container'
 import TipsDisplayer from '~client/components/for-student/lesson/tips-displayer/tips-displayer'
 import CodeEditor from '~client/components/for-student/lesson/code-editor/code-editor'
 import { clearLessonNum, setIsPreviouslyPassed } from '~client/redux/lesson-page/lesson-page-slice'
+import { OptimizedHead } from "~client/components/seo/OptimizedHead";
 
 export const LessonPage = () => {
   const lesson = useSelector(state => state.lessonPage.lesson)
@@ -33,9 +34,7 @@ export const LessonPage = () => {
 
   return (
     <div className={`main-content ${s.LessonPage}`}>
-      <Head>
-        <title>{lesson.theme}</title>
-      </Head>
+      <OptimizedHead title={lesson.theme} description={`Урок по ${lesson.theme}`} />
 
       <LessonCaption lessonName={lesson.theme} lessonNumber={lesson.num} />
       <Container>

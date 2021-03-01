@@ -3,10 +3,10 @@ import { NextPage } from 'next'
 import { LessonHead } from '~shared/types/lesson'
 import { userAPI } from '~client/dal/lessons.api'
 import s from '../../static/styles/pages-styles/lessons/index.module.scss'
-import Head from 'next/head'
 import Header from '~client/components/for-student/header/header'
 import { useLocalStorage } from '~client/shared/hooks/useLocalStorage'
 import dynamic from 'next/dynamic'
+import { OptimizedHead } from '~client/components/seo/OptimizedHead'
 const LessonCard = dynamic(() => import('../../components/for-student/lesson-card/lesson-card').then(mod => mod.LessonCard), { ssr: false })
 
 type Props = {
@@ -19,10 +19,7 @@ const Index: NextPage<Props> = ({ lessons }) => {
   console.log(passedNumbers)
   return (
     <div className="main-content">
-      <Head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
-        <title>Выбрать урок</title>
-      </Head>
+      <OptimizedHead title="Уроки" description={'Уроки по js для начинающих'} keywords={lessons.map(l => l.theme)} />
       <Header />
       <div className={s.lessons}>
         {lessons.map(l => {

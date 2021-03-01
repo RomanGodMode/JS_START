@@ -1,9 +1,5 @@
 @import "variables";
 
-.fa-arrow-right{
-  font-size: 1.6em;
-  color: #fff;
-}
 //<antd-steps>
 @media only screen and (max-width: 700px){
   .ant-steps-item{
@@ -34,6 +30,7 @@
 }
 //</antd-steps>
 
+//<antd-tabs>
 .ant-tabs-tab-btn{
   padding: 20px;
 }
@@ -47,7 +44,7 @@
     padding: 12px;
   }
 }
-
+//</antd-tabs>
 
 .main-content{
   background-color: $main-back;
