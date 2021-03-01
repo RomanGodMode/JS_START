@@ -1,0 +1,32 @@
+@import '../../../static/styles/variables';
+.header{
+  background-color: $main-back;
+  border-bottom: rgba(255,255,255, .25) 3px solid;
+  font-size: 18px;
+  .list{
+    height: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    a{
+      padding: 20px;
+      color: white;
+      background-color: rgba(155,155,155, .05);
+      &:hover{
+        background-color: $fair-highlight;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .header{
+    .list{
+      a{
+        padding: 17px;
+      }
+    }
+  }
+}
+

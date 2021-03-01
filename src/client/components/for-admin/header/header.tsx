@@ -8,9 +8,10 @@ const Header = () => {
     <header className={s.header}>
       <Container>
         <div className={s.list}>
-          <Link href={'/lessons'}>Уроки</Link>
-          <Link href={'/settings'}>Настройки</Link>
-          <Link href={'/cms/login'}>Админу</Link>
+          <Link href={'/cms/edit-lessons'}>Уроки</Link>
+          <Link href={'/cms/register'}>Регистрация</Link>
+          <Link href={'/cms'}>Выйти</Link>
+        {/*  TODO: Выйти*/}
         </div>
       </Container>
     </header>
