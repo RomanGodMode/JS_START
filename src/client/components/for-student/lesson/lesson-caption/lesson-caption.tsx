@@ -16,14 +16,14 @@ export type StepType = {
 type props = {
   lessonName: string
   lessonNumber: number
+  isPreviouslyPassed: boolean
 }
 
-const LessonCaption: FC<props> = ({ lessonName, lessonNumber}) => {
+const LessonCaption: FC<props> = ({ lessonName, lessonNumber, isPreviouslyPassed}) => {
   const stepsData = useSelector(state => state.lessonPage.steps)
 
   const currentStage = useSelector(state => state.lessonPage.progress.currentStage)
   const isCurrentPassed = useSelector(state => state.lessonPage.progress.isCurrentPassed)
-  const isPreviouslyPassed = useSelector(state => state.lessonPage.progress.isPreviouslyPassed)
 
   const current = (isPreviouslyPassed)? stepsData.length : currentStage + +isCurrentPassed
 

@@ -7,11 +7,11 @@ import Link from 'next/link'
 
 type Props = {
   js: string
+  isPreviouslyPassed: boolean
 }
 
-const ToolsPanel: FC<Props> = ({ js }) => {
+const ToolsPanel: FC<Props> = ({ js, isPreviouslyPassed }) => {
   const isCurrentStagePassed = useSelector(state => state.lessonPage.progress.isCurrentPassed)
-  const isPreviouslyPassed = useSelector(state => state.lessonPage.progress.isPreviouslyPassed)
   const isLast = useSelector(state => state.lessonPage.progress.isLast)
 
   const dispatch = useDispatch()
@@ -22,7 +22,7 @@ const ToolsPanel: FC<Props> = ({ js }) => {
         <span>Запустить</span>
       </button>
 
-      {isPreviouslyPassed ? (
+      {isPreviouslyPassed || isLast && isCurrentStagePassed ? (
         <Link href={'/lessons'}>
           <button className={`${s.ezBtn} ${s.toNextButton}`}>
             <span>К урокам</span>

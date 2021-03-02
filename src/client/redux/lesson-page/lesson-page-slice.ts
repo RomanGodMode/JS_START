@@ -15,7 +15,6 @@ const lessonsSlice = createSlice({
       theory: null
     } as Lesson,
     progress: {
-      isPreviouslyPassed: false,
       isLessonPassedRightNow: false,
       currentStage: 0,
       isCurrentPassed: false,
@@ -35,10 +34,9 @@ const lessonsSlice = createSlice({
     },
     compileJs(state, action) {
       state.result = compile(action.payload)
-      if (!state.progress.isPreviouslyPassed && state.result === state.lesson.stages[state.progress.currentStage].answer) {
+      if (state.result === state.lesson.stages[state.progress.currentStage].answer) {
         state.progress.isCurrentPassed = true
         if (state.progress.isLast) {
-          state.progress.isPreviouslyPassed = true
           state.progress.isLessonPassedRightNow = true
         }
       }
@@ -50,12 +48,6 @@ const lessonsSlice = createSlice({
       state.progress.isCurrentPassed = false
       state.progress.currentStage++
     },
-    setIsPreviouslyPassed(state) {
-      state.progress.isPreviouslyPassed = true
-    },
-    clearLessonNum(state) {
-      state.lesson.num = 0
-    },
     backtrackStage(state, action) {
       //TODO:
     }
@@ -63,4 +55,4 @@ const lessonsSlice = createSlice({
 })
 
 export default lessonsSlice.reducer
-export const { setLesson, compileJs, toNextStage, setIsPreviouslyPassed, backtrackStage, clearLessonNum } = lessonsSlice.actions
+export const { setLesson, compileJs, toNextStage, backtrackStage } = lessonsSlice.actions
