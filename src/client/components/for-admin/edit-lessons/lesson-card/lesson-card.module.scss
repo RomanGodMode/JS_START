@@ -1,0 +1,30 @@
+@import 'src/client/static/styles/variables';
+.lesson {
+  margin: 20px;
+  width: 300px;
+  max-width: 100%;
+}
+.lessonCardBody {
+  padding: 13px;
+  font-size: 17px;
+  background-color: $main-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px $pale-back solid;
+  &:hover {
+    background-color: $pale-back;
+    transition: 0.3s ease;
+    cursor: pointer;
+    i {
+      color: $fair-highlight;
+      transition: 0.3s ease;
+    }
+  }
+  .text {
+    padding: 10px 20px;
+    color: #fff;
+  }
+}

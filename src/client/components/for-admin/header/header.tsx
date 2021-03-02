@@ -10,7 +10,7 @@ const Header = () => {
         <div className={s.list}>
           <Link href={'/cms/edit-lessons'}>Уроки</Link>
           <Link href={'/cms/register'}>Регистрация</Link>
-          <Link href={'/cms'}>Выйти</Link>
+          <Link href={'/Чоорт'}>Выйти</Link>
         {/*  TODO: Выйти*/}
         </div>
       </Container>

@@ -1,5 +1,6 @@
 import s from '~client/static/styles/pages-styles/auth.module.scss'
 import Header from '~client/components/for-student/header/header'
+import AdminHeader from '~client/components/for-admin/header/header'
 import { Button, Checkbox, Form, Input } from 'antd'
 import Container from '~client/shared/partials/Container/Container'
 import { FC } from 'react'
@@ -9,7 +10,6 @@ type Props = {
 }
 
 const AuthPage: FC<Props> = ({ isLogin }) => {
-
   const login = values => {
     const { username, password, remember } = values
     console.log('login')
@@ -21,7 +21,7 @@ const AuthPage: FC<Props> = ({ isLogin }) => {
 
   return (
     <div className={`main-content ${s.AuthPage}`}>
-      <Header />
+      {isLogin ? <Header /> : <AdminHeader />}
       <Container className={s.Container}>
         <Form className={s.authForm} initialValues={{ remember: true }} onFinish={isLogin ? login : register}>
           <h3>{isLogin ? 'Войти' : 'Регистрация'}</h3>
