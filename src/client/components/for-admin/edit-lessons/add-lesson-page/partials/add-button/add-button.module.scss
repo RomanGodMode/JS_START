@@ -1,0 +1,21 @@
+
+.addButton{
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent !important;
+  color: #fff;
+}
+.addButtonText{
+  font-size: 23px;
+}
+
+@media only screen and (max-width: 350px) {
+  .addButtonText{
+    font-size: 18px;
+  }
+  .textarea{
+    font-size: 19px;
+  }
+}

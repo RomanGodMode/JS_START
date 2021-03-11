@@ -4,10 +4,11 @@ import { AuthService } from './service/auth.service'
 import { AdminRepository } from '../admin/service/admin.repository'
 import { AdminAuthCredentialsDto } from './dto/adminAuthCredentials.dto'
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly adminRepository: AdminRepository) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('register')
   async registerAdmin(@Body() adminAuthCredentialsDto: AdminAuthCredentialsDto) {
     const { login, password } = adminAuthCredentialsDto
@@ -27,9 +28,10 @@ export class AuthController {
     return this.authService.login(admin)
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @Get('profile')
-  // getMyData(@Request() req) {
-  //   return 'О так это же ты!'
-  // }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  getMyData(@Request() req) {
+    return 'О так это же ты!'
+  }
+
 }

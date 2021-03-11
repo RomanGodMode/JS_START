@@ -3,22 +3,31 @@
 .AuthPage {
   font-size: 30px;
   color: #fff;
+  .error {
+    color: $gucci-danger;
+    text-align: center;
+  }
+  .success {
+    color: $fair-highlight;
+    text-align: center;
+  }
   .Container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 50vh;
+    justify-content: flex-start;
+    min-height: 60vh;
   }
   .authForm {
     margin: 24px;
     max-width: 1000px;
-    padding: 35px;
-    border: rgba(255,255,255, .25) 3px solid;
+    padding: 35px 35px 20px 35px;
+    border: rgba(255, 255, 255, 0.25) 3px solid;
     h3 {
       color: #fff;
       font-size: 30px;
     }
-    .formGroup{
+    .formGroup {
       padding-top: 20px;
     }
     .authInput {
@@ -40,10 +49,18 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .AuthPage {
+    .error,
+    .success {
+      font-size: 20px;
+    }
+  }
+}
 
 @media only screen and (max-width: 324px) {
-  .checkBox{
-    span{
+  .checkBox {
+    span {
       font-size: 20px;
     }
   }

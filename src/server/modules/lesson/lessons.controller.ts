@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { LessonsRepository } from './service/lessons.repository'
 import { CreateLessonDto } from './dto/CreateLesson.dto'
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller('api/lessons')
 export class LessonsController {
@@ -31,16 +32,19 @@ export class LessonsController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   async createLesson(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonRepository.createLesson(createLessonDto)
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put(':num')
   async updateLesson(@Param('num') num: number, @Body() createLessonDto: CreateLessonDto) {
     return this.lessonRepository.updateLesson(num, createLessonDto)
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':num')
   async dropLessons(@Param('num') num: number) {
     return this.lessonRepository.deleteLessons(num)

@@ -1,0 +1,19 @@
+@import "src/client/static/styles/variables";
+
+.group{
+  padding-top: 20px;
+}
+
+.modal svg{
+  color: #fff;
+}
+.modal svg:hover{
+  color: rgba(255,255,255, .5);
+}
+.modal div{
+  background-color: $main-back;
+}
+.heading{
+  font-size: 25px;
+  color: #fff;
+}

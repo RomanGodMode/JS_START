@@ -51,4 +51,9 @@
   min-height: 100vh;
 }
 
+input, textarea{
+  resize: none !important;
+  color: #fff !important;
+  background-color: $main-content !important;
+}
 

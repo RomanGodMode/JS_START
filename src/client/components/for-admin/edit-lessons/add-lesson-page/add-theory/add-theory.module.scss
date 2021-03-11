@@ -1,0 +1,11 @@
+.theoryModule{
+  display: flex;
+  align-items: center;
+flex: 1;
+  .minus{
+    margin-left: 20px;
+    font-size: 27px;
+    color: #fff;
+    transform: translateY(-50%);
+  }
+}

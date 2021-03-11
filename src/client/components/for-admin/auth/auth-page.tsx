@@ -3,20 +3,41 @@ import Header from '~client/components/for-student/header/header'
 import AdminHeader from '~client/components/for-admin/header/header'
 import { Button, Checkbox, Form, Input } from 'antd'
 import Container from '~client/shared/partials/Container/Container'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useAdmin } from '~client/shared/hooks/useAdmin'
+import { useRouter } from 'next/router'
 
 type Props = {
   isLogin: boolean
 }
-
+//TODO: Выпилить Remember Me
 const AuthPage: FC<Props> = ({ isLogin }) => {
-  const login = values => {
-    const { username, password, remember } = values
-    console.log('login')
-  }
-  const register = values => {
+  const { admin, isAuthorized, authorize } = useAdmin()
+  const [error, setError] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
+
+  const router = useRouter()
+
+  const login = async values => {
     const { username, password } = values
-    console.log('register')
+    const token = await admin.login(username, password)
+    if (token) {
+      authorize(token)
+      setError('')
+      await router.push('/cms/edit-lessons')
+    } else setError('Не удалось авторизироваться')
+  }
+
+  const register = async values => {
+    const { username, password } = values
+    const successed = await admin.register(username, password)
+    if (successed) {
+      setIsSuccess(true)
+      setError('')
+    } else {
+      setError('Не удалось создать пользователя, скорее всего пользователь с таким именем уже существует')
+      setIsSuccess(false)
+    }
   }
 
   return (
@@ -32,15 +53,14 @@ const AuthPage: FC<Props> = ({ isLogin }) => {
           <Form.Item className={s.formGroup} name={'password'} rules={[{ required: true, message: 'Пожалуйста введите логин' }]}>
             <Input className={s.authInput} placeholder={'Пароль'} />
           </Form.Item>
-          {isLogin && (
-            <Form.Item name={'remember'} valuePropName="checked">
-              <Checkbox className={s.checkBox}>Запомнить меня</Checkbox>
-            </Form.Item>
-          )}
-          <Button style={!isLogin ? { marginTop: 40 } : {}} block htmlType={'submit'} className={s.authButton} type={'primary'}>
-            {isLogin ? 'Войти' : 'Зарегистрировать'}
-          </Button>
+          <Form.Item className={s.formGroup}>
+            <Button block htmlType={'submit'} className={s.authButton} type={'primary'}>
+              {isLogin ? 'Войти' : 'Зарегистрировать'}
+            </Button>
+          </Form.Item>
         </Form>
+        {error && <div className={s.error}>{error}</div>}
+        {isSuccess && <div className={s.success}>Молодец, зарегал админа!</div>}
       </Container>
     </div>
   )

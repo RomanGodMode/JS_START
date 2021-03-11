@@ -2,9 +2,10 @@ import axios from 'axios'
 import { Lesson, LessonHead } from '~shared/types/lesson'
 
 const axiosInstance = axios.create({
-  baseURL: process.env.API_BASE_URL,
-  headers: {}
+  baseURL: process.env.API_BASE_URL
 })
+
+export const basicHost = {...axiosInstance}
 
 export const lessonAPI = {
   async getLessons(): Promise<LessonHead[]> {
@@ -19,6 +20,4 @@ export const userAPI = {
   ...lessonAPI
 }
 
-export const adminAPI = {
-  ...lessonAPI
-}
+
