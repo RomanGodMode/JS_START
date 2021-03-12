@@ -10,9 +10,8 @@ import { useRouter } from 'next/router'
 type Props = {
   isLogin: boolean
 }
-//TODO: Выпилить Remember Me
 const AuthPage: FC<Props> = ({ isLogin }) => {
-  const { admin, isAuthorized, authorize } = useAdmin()
+  const { admin, authorize } = useAdmin()
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
 

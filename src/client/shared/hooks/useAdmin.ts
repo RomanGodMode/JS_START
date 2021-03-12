@@ -18,7 +18,7 @@ const admin = {
     return mutant
       .post(`auth/login`, { login, password })
       .then(d => d.data.accessToken)
-      .catch(e => '')
+      .catch(e => '')//TODO: ПОнять
   },
   async createLesson(lesson: Lesson) {
     return mutant.post(`lessons`, lesson).then(d => d.data)
@@ -36,6 +36,12 @@ const admin = {
 
 export function useAdmin() {
   const [token, setToken] = useLocalStorage('admin-token', '')
+
+  useEffect(() => {
+    console.log(token)
+    mutant.defaults.headers.common['Authorization'] = token
+  }, [token])
+
   const [isAuthorized, setIsAuthorized] = useState(false)
   useEffect(() => (token ? setIsAuthorized(true) : setIsAuthorized(false)), [token])
 
@@ -46,21 +52,15 @@ export function useAdmin() {
     (token: string) => {
       setToken(`Bearer ${token}`)
       clearTimeout(prevLoginTimeout)
-
       setPrevLoginTimeout(
         // @ts-ignore
         setTimeout(async () => {
-          await router.push('/cms/login')
-        }, 60000)//TODO: Поменять для продакшена
+          setToken('')
+        }, 60000) //TODO: Поменять для продакшена
       )
     },
     [token]
   )
-
-  useEffect(() => {
-    console.log(token)
-    mutant.defaults.headers.common['Authorization'] = token
-  }, [token])
 
   const logout = useCallback(async () => {
     setToken('')
@@ -68,7 +68,11 @@ export function useAdmin() {
     await router.push('/lessons')
   }, [])
 
-  //TODO: Авторизовать страницу (придумать магию)
+  const useAutorizePage = useCallback(() => {
+    useEffect(() => {
+      !token && router.push('/cms/login')
+    }, [token])
+  }, [token])
 
-  return { admin, isAuthorized, authorize, logout }
+  return { admin, isAuthorized, authorize, logout, useAutorizePage }
 }

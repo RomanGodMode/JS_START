@@ -7,8 +7,12 @@ import Container from '~client/shared/partials/Container/Container'
 import EditStages from '~client/components/for-admin/edit-lessons/add-lesson-page/edit-stages/edit-stages'
 import EditLessonHead from '~client/components/for-admin/edit-lessons/add-lesson-page/edit-lesson-head/edit-lesson-head'
 import AddTheory from '~client/components/for-admin/edit-lessons/add-lesson-page/add-theory/add-theory'
+import { useAdmin } from "~client/shared/hooks/useAdmin";
 
 const AddLessonPage = () => {
+  const { useAutorizePage } = useAdmin()
+  useAutorizePage()
+
   const [form] = Form.useForm()
 
   const addLesson = data => {

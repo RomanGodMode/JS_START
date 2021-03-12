@@ -1,7 +1,10 @@
 import React from "react";
-import s from '../../../static/styles/pages-styles/cms/edit-lesson.module.scss'
+import { useAdmin } from "~client/shared/hooks/useAdmin";
 
 const EditLessonPage = () => {
+  const { useAutorizePage } = useAdmin()
+  useAutorizePage()
+
   return (
     <div>
       Edit Lesson

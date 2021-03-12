@@ -1,11 +1,11 @@
 import React, { FC, useRef, useState } from 'react'
 import s from '../edit-tips/edit-tips.module.scss'
-import { Button, Card, Form, FormInstance, Input } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { Card, Form, FormInstance } from 'antd'
+import { MinusCircleOutlined } from '@ant-design/icons'
 import AddButton from '~client/components/for-admin/edit-lessons/add-lesson-page/partials/add-button/add-button'
 import EditStageModal from '~client/components/for-admin/edit-lessons/add-lesson-page/edit-stages/edit-stage-modal/edit-stage-modal'
 import { StageWithoutNum } from '~shared/types/lesson'
-import CaptionDivider from "~client/components/for-admin/edit-lessons/add-lesson-page/partials/caption-divider";
+import CaptionDivider from '~client/components/for-admin/edit-lessons/add-lesson-page/partials/caption-divider'
 
 type Props = {
   form: FormInstance
