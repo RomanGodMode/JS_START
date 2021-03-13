@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { basicHost, lessonAPI } from '~client/dal/lessons.api'
 import { Lesson } from '~shared/types/lesson'
 import { useRouter } from 'next/router'
+import jwtDecode from 'jwt-decode'
 
 const mutant = { ...basicHost }
 
@@ -18,7 +19,7 @@ const admin = {
     return mutant
       .post(`auth/login`, { login, password })
       .then(d => d.data.accessToken)
-      .catch(e => '')//TODO: ПОнять
+      .catch(e => '')
   },
   async createLesson(lesson: Lesson) {
     return mutant.post(`lessons`, lesson).then(d => d.data)
@@ -34,43 +35,43 @@ const admin = {
   }
 }
 
+type DecodedToken = {
+  exp: number
+}
+
+const tokenIsDead = (token: string): boolean => {
+  return jwtDecode<DecodedToken>(token).exp * 1000 <= Date.now()
+}
+
 export function useAdmin() {
   const [token, setToken] = useLocalStorage('admin-token', '')
 
   useEffect(() => {
-    console.log(token)
     mutant.defaults.headers.common['Authorization'] = token
   }, [token])
 
   const [isAuthorized, setIsAuthorized] = useState(false)
   useEffect(() => (token ? setIsAuthorized(true) : setIsAuthorized(false)), [token])
 
-  const [prevLoginTimeout, setPrevLoginTimeout] = useState<number>(undefined)
   const router = useRouter()
 
   const authorize = useCallback(
     (token: string) => {
       setToken(`Bearer ${token}`)
-      clearTimeout(prevLoginTimeout)
-      setPrevLoginTimeout(
-        // @ts-ignore
-        setTimeout(async () => {
-          setToken('')
-        }, 60000) //TODO: Поменять для продакшена
-      )
     },
     [token]
   )
 
   const logout = useCallback(async () => {
     setToken('')
-    clearTimeout(prevLoginTimeout)
     await router.push('/lessons')
   }, [])
 
   const useAutorizePage = useCallback(() => {
     useEffect(() => {
-      !token && router.push('/cms/login')
+      if (!token || tokenIsDead(token)) {
+        router.push('/cms/login').then()
+      }
     }, [token])
   }, [token])
 
