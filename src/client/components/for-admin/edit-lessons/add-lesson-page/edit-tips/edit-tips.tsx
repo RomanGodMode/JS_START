@@ -1,10 +1,10 @@
 import React from 'react'
 import s from './edit-tips.module.scss'
-import { Button, Form, Input, Space } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { Form } from 'antd'
+import { MinusCircleOutlined } from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
-import AddButton from "~client/components/for-admin/edit-lessons/add-lesson-page/partials/add-button/add-button";
-import CaptionDivider from "~client/components/for-admin/edit-lessons/add-lesson-page/partials/caption-divider";
+import AddButton from '~client/components/for-admin/edit-lessons/add-lesson-page/partials/add-button/add-button'
+import CaptionDivider from '~client/components/for-admin/edit-lessons/add-lesson-page/partials/caption-divider'
 
 const EditTips = () => {
   return (
@@ -14,7 +14,7 @@ const EditTips = () => {
         {(fields, { add, remove }) => (
           <>
             {fields.map(field => (
-              <div key={field.key} className={s.tipItem}>
+              <div key={field.key} className={s.stageItem}>
                 <Form.Item
                   style={{ width: '100%' }}
                   {...field}

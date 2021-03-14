@@ -30,18 +30,15 @@ const AddLessonPage = () => {
 
         <Form form={form} className={s.mainForm} onFinish={addLesson}>
           <EditLessonHead />
-
           <AddTheory />
-
           <EditStages form={form} />
-
           <EditTips />
-
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Кинуть урок на сервер
             </Button>
           </Form.Item>
+        {/*  TODO: Ошибка сервера*/}
         </Form>
       </Container>
     </div>

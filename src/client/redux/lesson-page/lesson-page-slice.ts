@@ -48,9 +48,7 @@ const lessonsSlice = createSlice({
       state.progress.isCurrentPassed = false
       state.progress.currentStage++
     },
-    backtrackStage(state, action) {
-      //TODO:
-    }
+    backtrackStage(state, action) {}
   }
 })
 

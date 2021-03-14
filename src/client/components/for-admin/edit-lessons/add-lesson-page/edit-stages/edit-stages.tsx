@@ -1,7 +1,7 @@
 import React, { FC, useRef, useState } from 'react'
-import s from '../edit-tips/edit-tips.module.scss'
+import s from './edit-stages.module.scss'
 import { Card, Form, FormInstance } from 'antd'
-import { MinusCircleOutlined } from '@ant-design/icons'
+import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons'
 import AddButton from '~client/components/for-admin/edit-lessons/add-lesson-page/partials/add-button/add-button'
 import EditStageModal from '~client/components/for-admin/edit-lessons/add-lesson-page/edit-stages/edit-stage-modal/edit-stage-modal'
 import { StageWithoutNum } from '~shared/types/lesson'
@@ -9,6 +9,12 @@ import CaptionDivider from '~client/components/for-admin/edit-lessons/add-lesson
 
 type Props = {
   form: FormInstance
+}
+
+const replaceByIndex = (arr: any[], idx: number, element: any): any[] => {
+  const result = [...arr]
+  result.splice(idx, 1, element)
+  return result
 }
 
 const EditStages: FC<Props> = ({ form }) => {
@@ -19,8 +25,7 @@ const EditStages: FC<Props> = ({ form }) => {
 
   const addRef = useRef()
 
-  const showAddModal = (add: (stage: StageWithoutNum, insertIndex: number) => void) => {
-    // @ts-ignore
+  const showAddModal = add => {
     addRef.current = add
     setIsVisible(true)
   }
@@ -32,7 +37,6 @@ const EditStages: FC<Props> = ({ form }) => {
 
   return (
     <>
-      {/*TODO: Доделать вёрстку Этапов*/}
       <EditStageModal visible={isVisible} onCancel={onCancel} onOk={onOk} onFinish={onFinish} />
 
       <CaptionDivider text={'Этапы'} />
@@ -40,12 +44,23 @@ const EditStages: FC<Props> = ({ form }) => {
         {(fields, { add, remove }) => (
           <>
             {fields.map((field, index) => (
-              <div key={field.key} className={s.tipItem}>
-                <Form.Item shouldUpdate>
+              <div key={field.key} className={s.stageItem}>
+                <Form.Item style={{ width: '100%' }} shouldUpdate>
                   {() => {
-                    return <Card>{`${index + 1} ${form.getFieldsValue().stages[index].title}`}</Card>
+                    return <Card className={s.stageCard}>{`${index + 1} ${form.getFieldsValue().stages[index].title}`}</Card>
                   }}
                 </Form.Item>
+                <EditOutlined
+                  onClick={() => {
+                    const editStage = (newStage) => {
+                      form.setFieldsValue({
+                        stages: replaceByIndex(form.getFieldsValue().stages, index, newStage)
+                      })
+                    }
+                    showAddModal(editStage)
+                  }}
+                  style={{ marginLeft: 20, fontSize: 27, color: '#fff', transform: 'translateY(-50%)' }}
+                />
                 <MinusCircleOutlined
                   style={{ marginLeft: 20, fontSize: 27, color: '#fff', transform: 'translateY(-50%)' }}
                   onClick={() => remove(field.name)}

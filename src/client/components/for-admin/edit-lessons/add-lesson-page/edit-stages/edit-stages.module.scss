@@ -1,0 +1,15 @@
+@import "src/client/static/styles/variables";
+.caption{
+  font-size: 24px;
+  color: #fff;
+}
+
+.stageItem{
+  display: flex;
+  align-items: center;
+  .stageCard{
+    font-size: 22px;
+    color: #fff;
+    background-color: lighten($main-back, 3.0%);
+  }
+}
