@@ -10,8 +10,19 @@ const EditTips = () => {
   return (
     <>
       <CaptionDivider text={'Подсказки'} />
-      <Form.List name="tips">
-        {(fields, { add, remove }) => (
+      <Form.List
+        name="tips"
+        rules={[
+          {
+            validator: async (_, tips) => {
+              if (!tips || tips.length < 1) {
+                return Promise.reject(new Error('Необходима по меньшей мере 1 подсказка'))
+              }
+            }
+          }
+        ]}
+      >
+        {(fields, { add, remove }, {errors}) => (
           <>
             {fields.map(field => (
               <div key={field.key} className={s.stageItem}>
@@ -31,6 +42,7 @@ const EditTips = () => {
               </div>
             ))}
             <AddButton add={add} text={'Добавить подсказку'} />
+            <div style={{paddingBottom:30}}><Form.ErrorList errors={errors}/></div>
           </>
         )}
       </Form.List>

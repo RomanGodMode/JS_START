@@ -8,7 +8,6 @@ import { MinusCircleOutlined } from '@ant-design/icons'
 
 type Props = {}
 
-
 const AddTheory: FC<Props> = () => {
   const [theoryNeed, setTheoryNeed] = useState(false)
 
@@ -18,7 +17,7 @@ const AddTheory: FC<Props> = () => {
       <div>
         {theoryNeed ? (
           <div className={s.theoryModule}>
-            <Form.Item style={{ width: '100%' }} name={'theory'}>
+            <Form.Item style={{ width: '100%' }} name={'theory'} rules={[{ required: true, message: 'Если не хотите добавлять теорию нажмите на минусик' }]}>
               <TextArea placeholder={'Теория к уроку'} />
             </Form.Item>
             <MinusCircleOutlined className={s.minus} onClick={() => setTheoryNeed(false)} />

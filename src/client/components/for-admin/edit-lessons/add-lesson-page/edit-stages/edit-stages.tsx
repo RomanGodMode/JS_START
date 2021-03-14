@@ -40,8 +40,19 @@ const EditStages: FC<Props> = ({ form }) => {
       <EditStageModal visible={isVisible} onCancel={onCancel} onOk={onOk} onFinish={onFinish} />
 
       <CaptionDivider text={'Этапы'} />
-      <Form.List name="stages">
-        {(fields, { add, remove }) => (
+      <Form.List
+        name="stages"
+        rules={[
+          {
+            validator: async (_, stages) => {
+              if (!stages || stages.length < 2) {
+                return Promise.reject(new Error('Необходимо по меньшей мере 2 этапа'))
+              }
+            }
+          }
+        ]}
+      >
+        {(fields, { add, remove }, {errors}) => (
           <>
             {fields.map((field, index) => (
               <div key={field.key} className={s.stageItem}>
@@ -52,7 +63,7 @@ const EditStages: FC<Props> = ({ form }) => {
                 </Form.Item>
                 <EditOutlined
                   onClick={() => {
-                    const editStage = (newStage) => {
+                    const editStage = newStage => {
                       form.setFieldsValue({
                         stages: replaceByIndex(form.getFieldsValue().stages, index, newStage)
                       })
@@ -73,6 +84,7 @@ const EditStages: FC<Props> = ({ form }) => {
               }}
               text={'Добавить этап'}
             />
+            <div style={{paddingBottom:30}}><Form.ErrorList errors={errors}/></div>
           </>
         )}
       </Form.List>

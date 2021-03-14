@@ -16,6 +16,7 @@ const AddLessonPage = () => {
   const [form] = Form.useForm()
 
   const addLesson = data => {
+    debugger
     console.log(data)
   }
 

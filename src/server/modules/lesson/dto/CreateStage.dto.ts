@@ -8,11 +8,11 @@ export class CreateStageDto {
   readonly num: number
 
   @IsString()
-  @MaxLength(22)
+  @MaxLength(13)
   readonly title: string
 
   @IsString()
-  @MinLength(5)
+  @MinLength(11)
   readonly task: string
 
   @IsString()

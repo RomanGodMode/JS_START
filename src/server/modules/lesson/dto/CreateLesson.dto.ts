@@ -19,11 +19,13 @@ export class CreateLessonDto {
   readonly theory: string
 
   @IsArray()
+  @IsNotEmpty()
+  @ArrayMinSize(1)
   readonly tooltips: string[]
 
   @IsArray()
   @IsNotEmpty()
-  @ArrayMinSize(1)
+  @ArrayMinSize(3)
   @ValidateNested({ each: true })
   @Type(() => CreateStageDto)
   @UniqueStagesNums()

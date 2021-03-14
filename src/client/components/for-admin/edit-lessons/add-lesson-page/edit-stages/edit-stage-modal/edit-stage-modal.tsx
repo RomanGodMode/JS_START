@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import s from './edit-stage-modal.module.scss'
 import { Button, Form, Input, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import { Stage, StageWithoutNum } from '~shared/types/lesson'
+import { StageWithoutNum } from '~shared/types/lesson'
 
 type Props = {
   visible: boolean
@@ -18,10 +18,24 @@ const EditStageModal: FC<Props> = ({ onFinish, ...modalProps }) => {
         <h5 className={s.heading}>Создать этап</h5>
         <hr style={{ marginBottom: 10 }} />
 
-        <Form.Item className={s.group} name={'title'} rules={[{ required: true, message: 'Введите название этапа' }]}>
+        <Form.Item
+          className={s.group}
+          name={'title'}
+          rules={[
+            { required: true, message: 'Введите название этапа' },
+            { max: 13, message: 'Название урока не должно быть таки длинным' }
+          ]}
+        >
           <Input placeholder={'Оглавление'} />
         </Form.Item>
-        <Form.Item className={s.group} name={'task'} rules={[{ required: true, message: 'Введите задачу' }]}>
+        <Form.Item
+          className={s.group}
+          name={'task'}
+          rules={[
+            { required: true, message: 'Введите задачу' },
+            { min: 11, message: 'Минимальная длина задачи 11 символов' }
+          ]}
+        >
           <TextArea style={{ height: 90 }} placeholder={'Текст задачи'} />
         </Form.Item>
         <Form.Item className={s.group} name={'answer'} rules={[{ required: true, message: 'Введите ответ' }]}>
