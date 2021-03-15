@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common/decorators'
 import { registerDecorator, ValidatorConstraint, ValidationOptions, ValidationArguments, ValidatorConstraintInterface } from 'class-validator'
-import { CreateStageDto } from './CreateStage.dto'
+import { CreateStageDto } from '../CreateStage.dto'
 
 @ValidatorConstraint({ async: false })
+@Injectable()
 export class StagesUniqueNumsConstraint implements ValidatorConstraintInterface {
   validate(stages: CreateStageDto[], args: ValidationArguments) {
     if (!stages) return false

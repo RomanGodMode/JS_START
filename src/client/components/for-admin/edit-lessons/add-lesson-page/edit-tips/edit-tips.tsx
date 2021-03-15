@@ -11,7 +11,7 @@ const EditTips = () => {
     <>
       <CaptionDivider text={'Подсказки'} />
       <Form.List
-        name="tips"
+        name="tooltips"
         rules={[
           {
             validator: async (_, tips) => {

@@ -45,8 +45,8 @@ const EditStages: FC<Props> = ({ form }) => {
         rules={[
           {
             validator: async (_, stages) => {
-              if (!stages || stages.length < 2) {
-                return Promise.reject(new Error('Необходимо по меньшей мере 2 этапа'))
+              if (!stages || stages.length < 3) {
+                return Promise.reject(new Error('Необходимо по меньшей мере 3 этапа'))
               }
             }
           }

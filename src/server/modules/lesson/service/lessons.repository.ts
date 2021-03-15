@@ -6,19 +6,22 @@ import { CreateLessonDto } from '../dto/CreateLesson.dto'
 
 @Injectable()
 export class LessonsRepository {
-
   constructor(
     @InjectModel(Lesson.name)
     private readonly lessonModel: Model<LessonDocument>
   ) {}
 
   async getLessonHeads(): Promise<any[]> {
-    return this.lessonModel.aggregate([{ $project: { num: 1, theme: 1 } }])
+    return this.lessonModel.aggregate([{ $project: { num: 1, theme: 1 } }]).sort({ num: 1 })
   }
 
-  async getLessonsNums(): Promise<number[]> {
-    const rawAggregate: any = await this.lessonModel.aggregate([{ $project: { num: 1 } }])
-    return rawAggregate.map(a => a.toObject().num)
+  async isUniqueNum(num: number): Promise<boolean> {
+    const lesson = await this.lessonModel.findOne({ num })
+    return !lesson
+  }
+  async isUniqueTheme(theme: string): Promise<boolean> {
+    const lesson = await this.lessonModel.findOne({ theme })
+    return !lesson
   }
 
   async getLessonByNum(num: number): Promise<LessonDocument> {

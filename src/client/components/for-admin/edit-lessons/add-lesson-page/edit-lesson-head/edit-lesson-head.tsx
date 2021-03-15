@@ -13,7 +13,7 @@ const EditLessonHead = () => {
           { required: true, message: 'Введите загаловок урока' },
           { min: 2, message: 'Загаловок урока должен быть длиной минимум 2 символа' }
         ]}
-        name={'title'}
+        name={'theme'}
         className={s.formGroup}
       >
         <Input placeholder={'Загаловок Урока'} />
