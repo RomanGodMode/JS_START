@@ -30,7 +30,9 @@ const EditLessonPage: FC<Props> = ({ isPatch }) => {
       body.stages = body.stages.map((s, i) => ({ ...s, num: i + 1 }))
       body.tooltips = body.tooltips.map(t => t.tipText)
       const res = await admin.createLesson(body)
+      console.log(res);
     } catch (e) {
+      console.log('ЫЫвафыа')
       console.log(e) //TODO: Смотреть на код ошибки
       setNetworkError('')
     }

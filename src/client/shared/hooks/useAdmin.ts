@@ -22,7 +22,7 @@ const admin = {
       .catch(e => '')
   },
   async createLesson(lesson: Lesson) {
-    return mutant.post(`lessons`, lesson).then(d => d.data)
+    return mutant.post(`lessons`, lesson).then(d => d.data).catch(e => e.message)
   },
   async patchLesson(lesson: Lesson) {
     return mutant.put(`lessons/${lesson.num}`, lesson).then(d => d.data)

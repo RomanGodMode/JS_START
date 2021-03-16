@@ -1,32 +1,23 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common'
 import { LessonsRepository } from './service/lessons.repository'
 import { CreateLessonDto } from './dto/CreateLesson.dto'
-import { AuthGuard } from "@nestjs/passport";
+import { AuthGuard } from '@nestjs/passport'
+import { PurifyInterceptor } from '~server/modules/lesson/service/purify.interceptor'
 
 @Controller('api/lessons')
 export class LessonsController {
   constructor(private readonly lessonRepository: LessonsRepository) {}
 
-  private parseLesson(rawLesson: any) {
-    const deleteIds = (obj: any) => {
-      Object.keys(obj).forEach(key => {
-        if (key === '_id' || key === '__v') delete obj[key]
-        else if (typeof obj[key] === 'object') deleteIds(obj[key])
-      })
-      return obj
-    }
-
-    return deleteIds(rawLesson)
-  }
-
   @Get()
+  @UseInterceptors(PurifyInterceptor)
   async getLessons() {
-    return this.parseLesson(await this.lessonRepository.getLessonHeads())
+    return this.lessonRepository.getLessonHeads()
   }
   @Get(':num')
+  @UseInterceptors(PurifyInterceptor)
   async getLesson(@Param('num') num: number): Promise<any> {
     try {
-      return this.parseLesson((await this.lessonRepository.getLessonByNum(num)).toObject())
+      return (await this.lessonRepository.getLessonByNum(num)).toObject()
     } catch (ex) {
       throw new NotFoundException('Нет такого урока')
     }
