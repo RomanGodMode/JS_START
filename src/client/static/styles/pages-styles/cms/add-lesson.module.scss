@@ -2,11 +2,17 @@
 
 .caption{
   margin-top: 20px;
+
   h1{
     margin-left: 22px;
     color: #fff;
     margin-bottom: 20px;
   }
+}
+
+
+.error{
+  color: $gucci-danger;
 }
 
 .mainForm{

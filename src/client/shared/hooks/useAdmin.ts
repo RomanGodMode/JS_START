@@ -19,10 +19,10 @@ const admin = {
     return mutant
       .post(`auth/login`, { login, password })
       .then(d => d.data.accessToken)
-      .catch(e => '')
+      .catch(() => '')
   },
   async createLesson(lesson: Lesson) {
-    return mutant.post(`lessons`, lesson).then(d => d.data).catch(e => e.message)
+    return mutant.post(`lessons`, lesson).then(d => d.data)
   },
   async patchLesson(lesson: Lesson) {
     return mutant.put(`lessons/${lesson.num}`, lesson).then(d => d.data)
@@ -30,7 +30,7 @@ const admin = {
   async deleteLesson(num: number) {
     return mutant
       .delete(`lessons/${num}`)
-      .then(d => console.log('ЫЫЫЫЫЫЫ'))
+      .then(() => console.log('ЫЫЫЫЫЫЫ'))
       .catch(e => console.log(e))
   }
 }

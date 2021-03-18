@@ -25,19 +25,29 @@ const EditLessonPage: FC<Props> = ({ isPatch }) => {
   const router = useRouter()
 
   const addLesson = async data => {
-    try {
-      const body = { ...data }
-      body.stages = body.stages.map((s, i) => ({ ...s, num: i + 1 }))
-      body.tooltips = body.tooltips.map(t => t.tipText)
-      const res = await admin.createLesson(body)
-      console.log(res);
-    } catch (e) {
-      console.log('ЫЫвафыа')
-      console.log(e) //TODO: Смотреть на код ошибки
-      setNetworkError('')
+    const lesson = {
+      ...data,
+      stages: data.stages.map((s, i) => ({ ...s, num: i + 1 })),
+      tooltips: data.tooltips.map(t => t.tipText),
+      theory: data.theory || ''
     }
 
-    // await router.push('/cms/lessons')
+    try {
+      await admin.createLesson(lesson)
+      await router.push('/cms/edit-lessons')
+    } catch (e) {
+      if (e.response.data.statusCode === 400) {
+        const notUniqueNum = e.response.data.message.includes('lessons num must be unique')
+        const notUniqueTheme = e.response.data.message.includes('lesson theme must be unique')
+
+        if (notUniqueNum && notUniqueTheme) {
+          setNetworkError('Тема урока и номер должны быть уникальны')
+        } else {
+          if (notUniqueTheme) setNetworkError('Тема урока должна быть уникальна')
+          else setNetworkError('Номер урока должен быть уникальным')
+        }
+      } else setNetworkError('Возможно сервер умер страшной смертью')
+    }
   }
 
   return (
@@ -59,7 +69,7 @@ const EditLessonPage: FC<Props> = ({ isPatch }) => {
               Кинуть урок на сервер
             </Button>
           </Form.Item>
-          {/*  TODO: Ошибка сервера*/}
+          <div className={s.error}>{networkError}</div>
         </Form>
       </Container>
     </div>
