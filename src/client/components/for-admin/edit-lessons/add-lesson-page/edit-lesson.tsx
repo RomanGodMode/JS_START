@@ -9,22 +9,26 @@ import EditLessonHead from '~client/components/for-admin/edit-lessons/add-lesson
 import AddTheory from '~client/components/for-admin/edit-lessons/add-lesson-page/add-theory/add-theory'
 import { useAdmin } from '~client/shared/hooks/useAdmin'
 import { useRouter } from 'next/router'
+import { NormalizedLesson } from '~shared/types/lesson'
 
 type Props = {
   isPatch?: boolean
+  lesson?: NormalizedLesson
 }
 
-const EditLessonPage: FC<Props> = ({ isPatch }) => {
+const EditLessonPage: FC<Props> = ({ isPatch, lesson }) => {
   const { admin, useAutorizePage } = useAdmin()
   useAutorizePage()
 
   const [form] = Form.useForm()
 
+  console.log(form.getFieldsValue().stages)
+
   const [networkError, setNetworkError] = useState('')
 
   const router = useRouter()
 
-  const addLesson = async data => {
+  const sendLesson = async data => {
     const lesson = {
       ...data,
       stages: data.stages.map((s, i) => ({ ...s, num: i + 1 })),
@@ -33,7 +37,7 @@ const EditLessonPage: FC<Props> = ({ isPatch }) => {
     }
 
     try {
-      await admin.createLesson(lesson)
+      isPatch ? await admin.patchLesson(lesson) : await admin.createLesson(lesson)
       await router.push('/cms/edit-lessons')
     } catch (e) {
       if (e.response.data.statusCode === 400) {
@@ -55,18 +59,18 @@ const EditLessonPage: FC<Props> = ({ isPatch }) => {
       <Header />
       <Container>
         <div className={s.caption}>
-          <h1>Добавить урок</h1>
+          <h1>{isPatch ? 'Изменить' : 'Добавить'} урок</h1>
           <hr />
         </div>
 
-        <Form form={form} className={s.mainForm} onFinish={addLesson}>
+        <Form initialValues={lesson} form={form} className={s.mainForm} onFinish={sendLesson}>
           <EditLessonHead />
-          <AddTheory />
+          <AddTheory form={form} hasTheory={isPatch && !!lesson.theory} />
           <EditStages form={form} />
           <EditTips />
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Кинуть урок на сервер
+              {isPatch ? 'Изменить урок' : 'Создать урок'}
             </Button>
           </Form.Item>
           <div className={s.error}>{networkError}</div>

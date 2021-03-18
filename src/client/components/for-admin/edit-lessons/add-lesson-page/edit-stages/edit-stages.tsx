@@ -52,13 +52,15 @@ const EditStages: FC<Props> = ({ form }) => {
           }
         ]}
       >
-        {(fields, { add, remove }, {errors}) => (
+        {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map((field, index) => (
               <div key={field.key} className={s.stageItem}>
                 <Form.Item style={{ width: '100%' }} shouldUpdate>
                   {() => {
-                    return <Card className={s.stageCard}>{`${index + 1} ${form.getFieldsValue().stages[index].title}`}</Card>
+                    const stages = form.getFieldsValue().stages
+                    if (!stages) return <div>Бяк</div>
+                    return <Card className={s.stageCard}>{`${index + 1} ${stages[index].title}`}</Card>
                   }}
                 </Form.Item>
                 <EditOutlined
@@ -84,7 +86,9 @@ const EditStages: FC<Props> = ({ form }) => {
               }}
               text={'Добавить этап'}
             />
-            <div style={{paddingBottom:30}}><Form.ErrorList errors={errors}/></div>
+            <div style={{ paddingBottom: 30 }}>
+              <Form.ErrorList errors={errors} />
+            </div>
           </>
         )}
       </Form.List>
