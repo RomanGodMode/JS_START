@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { ConflictException, Injectable, NotAcceptableException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Lesson, LessonDocument } from '../model/lesson.schema'
 import { Model } from 'mongoose'
 import { CreateLessonDto } from '../dto/CreateLesson.dto'
+import { ReplaceLessonDto } from '~server/modules/lesson/dto/ReplaceLesson.dto'
 
 @Injectable()
 export class LessonsRepository {
@@ -29,12 +30,23 @@ export class LessonsRepository {
   }
 
   async createLesson(createLessonDto: CreateLessonDto): Promise<LessonDocument> {
-    const lessons = new this.lessonModel(createLessonDto)
-    return lessons.save()
+    const lesson = new this.lessonModel(createLessonDto)
+    return lesson.save()
   }
 
-  async updateLesson(replaceableLessonNumber: number, createLessonDto: CreateLessonDto): Promise<LessonDocument> {
-    return this.lessonModel.replaceOne({ num: replaceableLessonNumber }, createLessonDto)
+  async updateLesson(replaceableLessonNumber: number, lesson: ReplaceLessonDto): Promise<LessonDocument> {
+    if (replaceableLessonNumber !== lesson.num) {
+      if (!!(await this.lessonModel.findOne({ num: lesson.num }))) throw new NotAcceptableException('Другой урок с таким же номером уже существует')
+    } else {
+      const oldLesson = await this.lessonModel.findOne({ num: replaceableLessonNumber })
+      if (!!oldLesson && oldLesson.theme !== lesson.theme) {
+        if (await this.lessonModel.findOne({ theme: lesson.theme })) {
+          throw new ConflictException('Такая тема урока уже есть')
+        }
+      }
+    }
+    await this.lessonModel.deleteOne({ num: replaceableLessonNumber }).exec()
+    return await new this.lessonModel(lesson).save()
   }
 
   async deleteLessons(num: number): Promise<any> {

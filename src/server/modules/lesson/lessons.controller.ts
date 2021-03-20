@@ -1,8 +1,21 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+  UseInterceptors
+} from "@nestjs/common";
 import { LessonsRepository } from './service/lessons.repository'
 import { CreateLessonDto } from './dto/CreateLesson.dto'
 import { AuthGuard } from '@nestjs/passport'
 import { PurifyInterceptor } from '~server/modules/lesson/service/purify.interceptor'
+import { ReplaceLessonDto } from '~server/modules/lesson/dto/ReplaceLesson.dto'
 
 @Controller('api/lessons')
 export class LessonsController {
@@ -31,8 +44,8 @@ export class LessonsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':num')
-  async updateLesson(@Param('num') num: number, @Body() createLessonDto: CreateLessonDto) {
-    return this.lessonRepository.updateLesson(num, createLessonDto)
+  async updateLesson(@Param('num', ParseIntPipe) num: number, @Body() lesson: ReplaceLessonDto) {
+    return this.lessonRepository.updateLesson(num, lesson)
   }
 
   @UseGuards(AuthGuard('jwt'))
