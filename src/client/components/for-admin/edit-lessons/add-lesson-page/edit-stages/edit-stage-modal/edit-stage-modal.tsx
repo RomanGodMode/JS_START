@@ -3,18 +3,28 @@ import s from './edit-stage-modal.module.scss'
 import { Button, Form, Input, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { StageWithoutNum } from '~shared/types/lesson'
+import useForm from 'antd/lib/form/hooks/useForm'
 
 type Props = {
+  initialStage?: StageWithoutNum
   visible: boolean
   onCancel: () => void
   onOk: () => void
   onFinish: (data: StageWithoutNum) => void
 }
 
-const EditStageModal: FC<Props> = ({ onFinish, ...modalProps }) => {
+const EditStageModal: FC<Props> = ({ onFinish, initialStage, ...modalProps }) => {
+  const [form] = useForm()
+
+  if (initialStage) {
+    form.setFieldsValue(initialStage)
+  } else {
+    form.setFieldsValue({ title: '', task: '', answer: '' })
+  }
+
   return (
     <Modal className={s.modal} {...modalProps} footer={null}>
-      <Form name="basic" onFinish={onFinish} className={s.form}>
+      <Form form={form} name="basic" onFinish={onFinish} className={s.form}>
         <h5 className={s.heading}>Создать этап</h5>
         <hr style={{ marginBottom: 10 }} />
 

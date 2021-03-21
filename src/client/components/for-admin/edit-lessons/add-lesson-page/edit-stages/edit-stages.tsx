@@ -24,8 +24,10 @@ const EditStages: FC<Props> = ({ form }) => {
   const onOk = () => setIsVisible(false)
 
   const addRef = useRef()
+  const [currentStage, setCurrentStage] = useState<StageWithoutNum>()
 
-  const showAddModal = add => {
+  const showAddModal = (add, currentStage: StageWithoutNum) => {
+    setCurrentStage(currentStage)
     addRef.current = add
     setIsVisible(true)
   }
@@ -37,7 +39,7 @@ const EditStages: FC<Props> = ({ form }) => {
 
   return (
     <>
-      <EditStageModal visible={isVisible} onCancel={onCancel} onOk={onOk} onFinish={onFinish} />
+      <EditStageModal initialStage={currentStage} visible={isVisible} onCancel={onCancel} onOk={onOk} onFinish={onFinish} />
 
       <CaptionDivider text={'Этапы'} />
       <Form.List
@@ -70,7 +72,7 @@ const EditStages: FC<Props> = ({ form }) => {
                         stages: replaceByIndex(form.getFieldsValue().stages, index, newStage)
                       })
                     }
-                    showAddModal(editStage)
+                    showAddModal(editStage, form.getFieldsValue().stages[index])
                   }}
                   style={{ marginLeft: 20, fontSize: 27, color: '#fff', transform: 'translateY(-50%)' }}
                 />
@@ -82,7 +84,7 @@ const EditStages: FC<Props> = ({ form }) => {
             ))}
             <AddButton
               add={() => {
-                showAddModal(add)
+                showAddModal(add, {title: '', answer: '', task: ''})
               }}
               text={'Добавить этап'}
             />
