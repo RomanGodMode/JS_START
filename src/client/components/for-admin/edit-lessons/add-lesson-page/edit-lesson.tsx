@@ -10,34 +10,27 @@ import AddTheory from '~client/components/for-admin/edit-lessons/add-lesson-page
 import { useAdmin } from '~client/shared/hooks/useAdmin'
 import { useRouter } from 'next/router'
 import { NormalizedLesson } from '~shared/types/lesson'
+import { unnormalizeLesson } from '~shared/mappers/unnormilize-lesson'
 
 type Props = {
   isPatch?: boolean
-  lesson?: NormalizedLesson
+  oldLesson?: NormalizedLesson
 }
 
-const EditLessonPage: FC<Props> = ({ isPatch, lesson }) => {
+const EditLessonPage: FC<Props> = ({ isPatch, oldLesson }) => {
   const { admin, useAutorizePage } = useAdmin()
   useAutorizePage()
 
   const [form] = Form.useForm()
 
-  console.log(form.getFieldsValue().stages)
-
   const [networkError, setNetworkError] = useState('')
 
   const router = useRouter()
 
-  const sendLesson = async data => {
-    const lesson = {
-      ...data,
-      stages: data.stages.map((s, i) => ({ ...s, num: i + 1 })),
-      tooltips: data.tooltips.map(t => t.tipText),
-      theory: data.theory || ''
-    }
-
+  const createLesson = async data => {
+    const lesson = unnormalizeLesson(data)
     try {
-      isPatch ? await admin.patchLesson(lesson) : await admin.createLesson(lesson)
+      await admin.createLesson(lesson)
       await router.push('/cms/edit-lessons')
     } catch (e) {
       if (e.response.data.statusCode === 400) {
@@ -54,6 +47,18 @@ const EditLessonPage: FC<Props> = ({ isPatch, lesson }) => {
     }
   }
 
+  const updateLesson = async data => {
+    const lesson = unnormalizeLesson(data)
+    console.log(lesson)
+    try {
+      await admin.updateLesson(lesson, oldLesson.num)
+      await router.push('/cms/edit-lessons')
+    } catch (e) {
+      console.log(e.response.data)
+      setNetworkError(e.response.data.message)
+    }
+  }
+
   return (
     <div className="main-content">
       <Header />
@@ -63,15 +68,27 @@ const EditLessonPage: FC<Props> = ({ isPatch, lesson }) => {
           <hr />
         </div>
 
-        <Form initialValues={lesson} form={form} className={s.mainForm} onFinish={sendLesson}>
+        <Form initialValues={oldLesson} form={form} className={s.mainForm} onFinish={isPatch ? updateLesson : createLesson}>
           <EditLessonHead />
-          <AddTheory form={form} hasTheory={isPatch && !!lesson.theory} />
+          <AddTheory form={form} hasTheory={isPatch && !!oldLesson.theory} />
           <EditStages form={form} />
           <EditTips />
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
+          <Form.Item className={s.submitModule}>
+            <Button className={s.sendLesson} type="primary" htmlType="submit">
               {isPatch ? 'Изменить урок' : 'Создать урок'}
             </Button>
+            {isPatch && (
+              <Button
+                type={'ghost'}
+                className={s.deleteButton}
+                onClick={async () => {
+                  await admin.deleteLesson(oldLesson.num)
+                  await router.push('/cms/edit-lessons')
+                }}
+              >
+                Удалить этот урок
+              </Button>
+            )}
           </Form.Item>
           <div className={s.error}>{networkError}</div>
         </Form>

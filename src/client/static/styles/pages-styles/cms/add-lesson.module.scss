@@ -1,32 +1,57 @@
-@import "src/client/static/styles/variables";
+@import 'src/client/static/styles/variables';
 
-.caption{
+.caption {
   margin-top: 20px;
 
-  h1{
+  h1 {
     margin-left: 22px;
     color: #fff;
     margin-bottom: 20px;
   }
 }
 
-
-.error{
+.error {
   color: $gucci-danger;
 }
 
-.mainForm{
+.mainForm {
   padding: 30px;
-  input, textarea{
+  input,
+  textarea {
     font-size: 22px;
     color: #fff;
     background-color: $main-content !important;
     resize: none;
   }
+  .submitModule {
+    .sendLesson {
+    }
+    .deleteButton {
+      //margin-right: 10px;
+      color: #fff;
+      &:hover {
+        color: rgb(64, 169, 255);
+      }
+    }
+  }
 }
 
-@media only screen and (max-width: 400px){
-  .mainForm{
+@media only screen and (max-width: 400px) {
+  .mainForm {
     padding: 10px;
+  }
+  .submitModule {
+    .sendLesson {
+      width: 100%;
+      margin: 0 auto;
+    }
+    .deleteButton {
+      margin-top: 20px;
+      width: 100%;
+      color: #fff;
+      &:hover {
+        color: rgb(64, 169, 255);
+      }
+    }
   }
 }

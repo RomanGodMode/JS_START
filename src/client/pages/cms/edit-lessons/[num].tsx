@@ -9,7 +9,7 @@ type Props = {
 }
 
 const EditLessonPageNext: NextPage<Props> = ({ lesson }) => {
-  return <EditLessonPage isPatch lesson={lesson} />
+  return <EditLessonPage isPatch oldLesson={lesson} />
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {

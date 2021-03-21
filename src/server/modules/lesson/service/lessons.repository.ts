@@ -36,13 +36,12 @@ export class LessonsRepository {
 
   async updateLesson(replaceableLessonNumber: number, lesson: ReplaceLessonDto): Promise<LessonDocument> {
     if (replaceableLessonNumber !== lesson.num) {
-      if (!!(await this.lessonModel.findOne({ num: lesson.num }))) throw new NotAcceptableException('Другой урок с таким же номером уже существует')
-    } else {
-      const oldLesson = await this.lessonModel.findOne({ num: replaceableLessonNumber })
-      if (!!oldLesson && oldLesson.theme !== lesson.theme) {
-        if (await this.lessonModel.findOne({ theme: lesson.theme })) {
-          throw new ConflictException('Такая тема урока уже есть')
-        }
+      if (await this.lessonModel.findOne({ num: lesson.num })) throw new NotAcceptableException('Другой урок с таким же номером уже существует')
+    }
+    const oldLesson = await this.lessonModel.findOne({ num: replaceableLessonNumber })
+    if (oldLesson.theme !== lesson.theme) {
+      if (await this.lessonModel.findOne({ theme: lesson.theme })) {
+        throw new ConflictException('Такая тема урока уже есть у другого урока')
       }
     }
     await this.lessonModel.deleteOne({ num: replaceableLessonNumber }).exec()

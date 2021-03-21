@@ -24,13 +24,12 @@ const admin = {
   async createLesson(lesson: Lesson) {
     return mutant.post(`lessons`, lesson).then(d => d.data)
   },
-  async patchLesson(lesson: Lesson) {
-    return mutant.put(`lessons/${lesson.num}`, lesson).then(d => d.data)
+  async updateLesson(lesson: Lesson, numForReplace: number) {
+    return mutant.put(`lessons/${numForReplace}`, lesson).then(d => d.data)
   },
   async deleteLesson(num: number) {
     return mutant
       .delete(`lessons/${num}`)
-      .then(() => console.log('ЫЫЫЫЫЫЫ'))
       .catch(e => console.log(e))
   }
 }
