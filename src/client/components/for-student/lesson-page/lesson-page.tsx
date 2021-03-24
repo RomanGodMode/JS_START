@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from '~client/shared/hooks/useAppSelector'
 import { useLocalStorage } from '~client/shared/hooks/useLocalStorage'
@@ -17,7 +16,11 @@ export const LessonPage = () => {
   const [isPreviouslyPassed, setIsPreviouslyPassed] = useState(false)
 
   useEffect(() => {
-    if (nums.includes(lesson.num)) setIsPreviouslyPassed(true)
+    if (nums.includes(lesson.num)) {
+      setIsPreviouslyPassed(true)
+    } else {
+      setIsPreviouslyPassed(false)
+    }
   }, [lesson.num])
 
   useEffect(() => {

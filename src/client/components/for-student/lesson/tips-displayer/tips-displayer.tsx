@@ -10,7 +10,7 @@ type Props = {
 
 const TipsDisplayer: React.FC<Props> = ({ tips }) => {
   const currStage = useSelector(state => state.lessonPage.progress.currentStage)
-  const currTask = useSelector(state => state.lessonPage.lesson.stages[currStage].task) || ''
+  const currTask = useSelector(state => state.lessonPage.lesson.stages[currStage]?.task) || ''
 
   const tipsTabs = tips.map((t, i) => (
     <TabPane className={styles.tipBody} tab={i + 1} key={i + 1}>

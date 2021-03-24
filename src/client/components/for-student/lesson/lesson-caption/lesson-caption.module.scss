@@ -24,6 +24,15 @@
   .Steps {
     .Step {
     }
+    .PassedStep {
+      div {
+        cursor: pointer;
+        &:hover {
+          color: $link-highlight !important;
+          transition: 0.5s;
+        }
+      }
+    }
   }
 }
 
@@ -31,7 +40,7 @@
   .LessonCaption {
     flex-direction: column;
 
-    .Steps{
+    .Steps {
       .Step {
         margin-left: 0;
         margin-top: 20px;
@@ -41,7 +50,7 @@
 }
 @media only screen and (max-width: 700px) {
   .LessonCaption {
-    .Steps{
+    .Steps {
       flex-direction: column;
       .Step {
         margin-left: 0;

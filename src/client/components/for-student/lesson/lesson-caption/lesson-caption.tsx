@@ -3,9 +3,9 @@ import s from './lesson-caption.module.scss'
 import { Breadcrumb, Divider, Steps } from 'antd'
 import Link from 'next/link'
 import Container from '~client/shared/partials/Container/Container'
-import { RootState } from '~client/redux/store'
 import { useSelector } from '~client/shared/hooks/useAppSelector'
-import { current } from "@reduxjs/toolkit";
+import { useDispatch } from 'react-redux'
+import { backtrackStage } from '~client/redux/lesson-page/lesson-page-slice'
 
 const { Step } = Steps
 
@@ -19,13 +19,12 @@ type props = {
   isPreviouslyPassed: boolean
 }
 
-const LessonCaption: FC<props> = ({ lessonName, lessonNumber, isPreviouslyPassed}) => {
+const LessonCaption: FC<props> = ({ lessonName, lessonNumber, isPreviouslyPassed }) => {
   const stepsData = useSelector(state => state.lessonPage.steps)
 
-  const currentStage = useSelector(state => state.lessonPage.progress.currentStage)
-  const isCurrentPassed = useSelector(state => state.lessonPage.progress.isCurrentPassed)
+  const passedStagesCount = useSelector(state => state.lessonPage.progress.passedStagesCount)
 
-  const current = (isPreviouslyPassed)? stepsData.length : currentStage + +isCurrentPassed
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -39,9 +38,14 @@ const LessonCaption: FC<props> = ({ lessonName, lessonNumber, isPreviouslyPassed
               {lessonNumber}. {lessonName}
             </Breadcrumb.Item>
           </Breadcrumb>
-          <Steps className={s.Steps} current={current}>
-            {stepsData.map(step => (
-              <Step className={s.Step} title={step.title} key={step.title} />
+          <Steps className={s.Steps} current={isPreviouslyPassed ? stepsData.length : passedStagesCount}>
+            {stepsData.map((step, i) => (
+              <Step
+                className={`${s.Step} ${isPreviouslyPassed && s.PassedStep}`}
+                onClick={() => dispatch(backtrackStage({ stageNum: i }))}
+                title={step.title}
+                key={step.title}
+              />
             ))}
           </Steps>
         </div>

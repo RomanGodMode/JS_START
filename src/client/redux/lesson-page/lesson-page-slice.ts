@@ -17,6 +17,7 @@ const lessonsSlice = createSlice({
     progress: {
       isLessonPassedRightNow: false,
       currentStage: 0,
+      passedStagesCount: 0,
       isCurrentPassed: false,
       isLast: false
     },
@@ -28,6 +29,7 @@ const lessonsSlice = createSlice({
       state.result = ''
       state.progress.isLessonPassedRightNow = false
       state.progress.currentStage = 0
+      state.progress.passedStagesCount = 0
       state.progress.isCurrentPassed = false
       state.progress.isLast = false
       state.steps = state.lesson.stages.map(s => ({ title: s.title }))
@@ -36,6 +38,7 @@ const lessonsSlice = createSlice({
       state.result = compile(action.payload)
       if (state.result === state.lesson.stages[state.progress.currentStage].answer) {
         state.progress.isCurrentPassed = true
+        state.progress.passedStagesCount = state.progress.currentStage + 1
         if (state.progress.isLast) {
           state.progress.isLessonPassedRightNow = true
         }
@@ -48,7 +51,9 @@ const lessonsSlice = createSlice({
       state.progress.isCurrentPassed = false
       state.progress.currentStage++
     },
-    backtrackStage(state, action) {}
+    backtrackStage(state, action: { payload: { stageNum: number } }) {
+      state.progress.currentStage = action.payload.stageNum
+    }
   }
 })
 
