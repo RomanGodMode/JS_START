@@ -1,0 +1,38 @@
+.JsBenefit + .JsBenefit {
+  margin-top: 40px;
+}
+.JsBenefit {
+  border: rgba(255, 255, 255, 0.3) 3px solid;
+  padding: 20px 20px 6px 20px;
+  color: white;
+  font-size: 30px;
+  h5 {
+    color: white;
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 1350px) {
+  .JsBenefit {
+    font-size: 26px;
+    h5 {
+      font-size: 26px;
+    }
+  }
+}
+@media only screen and (max-width: 930px) {
+  .JsBenefit {
+    font-size: 22px;
+    h5 {
+      font-size: 22px;
+    }
+  }
+}
+@media only screen and (max-width: 666px) {
+  .JsBenefit {
+    font-size: 18px;
+    h5 {
+      font-size: 20px;
+    }
+  }
+}
