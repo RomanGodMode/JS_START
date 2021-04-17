@@ -11,6 +11,7 @@ import { useAdmin } from '~client/shared/hooks/useAdmin'
 import { useRouter } from 'next/router'
 import { NormalizedLesson } from '~shared/types/lesson'
 import { unnormalizeLesson } from '~shared/mappers/unnormilize-lesson'
+import LoadingPage from "~client/components/for-admin/auth/loading-page/loading-page";
 
 type Props = {
   isPatch?: boolean
@@ -19,7 +20,9 @@ type Props = {
 
 const EditLessonPage: FC<Props> = ({ isPatch, oldLesson }) => {
   const { admin, useAutorizePage } = useAdmin()
-  useAutorizePage()
+
+  const { isLoaded } = useAutorizePage()
+  if (!isLoaded) return <LoadingPage />
 
   const [form] = Form.useForm()
 

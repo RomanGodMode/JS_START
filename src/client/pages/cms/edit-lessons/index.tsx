@@ -7,6 +7,7 @@ import { LessonCard } from '~client/components/for-admin/edit-lessons/lesson-car
 import Header from '~client/components/for-admin/header/header'
 import { AddLessonCard } from '~client/components/for-admin/edit-lessons/add-lesson-card/add-lesson-card'
 import { useAdmin } from '~client/shared/hooks/useAdmin'
+import LoadingPage from '~client/components/for-admin/auth/loading-page/loading-page'
 
 type Props = {
   lessons: LessonHead[]
@@ -14,7 +15,9 @@ type Props = {
 
 const Index: NextPage<Props> = ({ lessons }) => {
   const { useAutorizePage } = useAdmin()
-  useAutorizePage()
+
+  const { isLoaded } = useAutorizePage()
+  if (!isLoaded) return <LoadingPage />
 
   return (
     <div className={`${s.lessonsPage} main-content`}>
