@@ -1,0 +1,26 @@
+.loadingPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .spinner {
+    font-size: 300px;
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .loadingPage{
+    .spinner{
+      font-size: 200px;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .loadingPage{
+    .spinner{
+      font-size: 120px;
+    }
+  }
+}

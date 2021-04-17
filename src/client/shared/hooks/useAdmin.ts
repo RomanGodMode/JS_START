@@ -67,11 +67,15 @@ export function useAdmin() {
   }, [])
 
   const useAutorizePage = useCallback(() => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     useEffect(() => {
       if (!token || tokenIsDead(token)) {
         router.push('/cms/login').then()
+      }else {
+        setIsLoaded(true)
       }
     }, [token])
+    return { isLoaded }
   }, [token])
 
   return { admin, isAuthorized, authorize, logout, useAutorizePage }

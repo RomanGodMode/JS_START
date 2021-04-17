@@ -14,7 +14,7 @@ const Home: NextPage<HomePageProps> = () => {
       <OptimizedHead title={'js-start'} description={'стань жаваскритизёром уже сейчас!'} />
       <Header />
       <Container>
-        <h3 className={s.mainTitle}>5 причин учить именно javaScript</h3>
+        <h3 className={s.mainTitle}>3 причины учить именно javaScript</h3>
       </Container>
       <JsBenefit
         title={'JavaScript - один из самых популярных языков программирования'}
